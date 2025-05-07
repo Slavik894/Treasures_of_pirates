@@ -1,21 +1,18 @@
 
-//функции
-
-//старт игры
+//function start game
 	function startIgra(){
-	//создание шарика
+	
 	sozdanieBall();
-
 }
 
-//звук монеты
+//coin sound
 function soundClick(){
 	var audio = new Audio();
 	audio.src="coin.mp3";
 	audio.autoplay = true;
 }
 
-//звук падения камня
+//sound of falling stone
 function soundClick1(){
 	var audio = new Audio();
 	audio.src="endkamen.mp3";
@@ -26,27 +23,25 @@ function soundClick2(){
 	audio.src="rub.wav";
 	audio.autoplay = true;
 }
-//звук фоновый игры
+//background music
 function soundClick3(){
 	var audio = new Audio();
 	audio.src="1.mp3";
 	audio.autoplay = true;
 }
 
-//создание шарика и добавление элемента
+//creating a ball
 function sozdanieBall(){
-	 //блок div
+	 
 	var ball = document.createElement("div");
-	 //добавляем в игровое поле igra
-	 //id шарика
+
 	 ball.className = "ball";
 
 		ball.innerText = "1"
 
-	 //направление шарика
+	 //ball direction
 	 var napravlenie = random(2);
 
-	 //направление, одно из 3х
 	 if(napravlenie == 1){
 	 	ball.className = "ball left";
 	} else {
@@ -54,144 +49,139 @@ function sozdanieBall(){
 	}
 
 
-	//ф-ция для проведения мышкой по шарику
+	//mouse over ball function
 	 ball.onmousemove = function(){
 
 	 	if(ball.className != "ball ojidaet-udaleniya"){
 			soundClick();
-			//добавление очков
+	
 			ochki = ochki + 1;
 			stars.innerText = ochki;
-			//прозрачность шарика
+			
 			ball.style.opacity = "0";
 
-			//создание нового шарика
+			//create a new ball
 			setTimeout(function(){
-				//удаление предыдущего
+				
 				ball.remove();
-				//выбирается ранее созданный шарик. Если его нет, то эта переменная пустая
+				//the previously created ball is selected. If it does not exist, this variable is empty
 				var suschestvuetBall = document.querySelector(".left",".right");
 				if(suschestvuetBall == null){
-					//сколько шариков должно быть
+					
 					var kolichestvoBall = random(3);
-					//сколько есть на текущий момент
+					
 					var tekuscheeColichestvoBall = 0;
 					while(tekuscheeColichestvoBall < kolichestvoBall) {
-					//шарик на поле
+					
 					sozdanieBall();
 					tekuscheeColichestvoBall = tekuscheeColichestvoBall + 1;
 					}
 
 				}
 			},200)
-		}//конец onclick
+		}
 
-		//ф-ция делает невозможным набрать очки на 1 шарике несколько раз
+		//function makes it impossible to score points on 1 ball more than once
 		ball.className = "ball ojidaet-udaleniya" ;
 
 	}
 
-	//задание координатов рубину
+	//ruby coordinate setting
 	setTimeout(function(){
 		ball.style.top = random(350) + "px";
 		ball.style.left = random(350) + "px";
 	},200)
 
-	//падение шарика
+	//balloon fall
 	setTimeout(function(){
-		//ускорение изменения элемента
+		//element change acceleration
 		ball.style.transition = "all 0s"
-		//через время ширик опускается со скоростью Х px/Y ms
+		//after a time, the bar drops at X px/Y ms.
 		var timerBall = setInterval(function(){
 			//X px
 			ball.style.top = ball.offsetTop + 2 + "px";
-			//удаление шарика при его выходе за границы
+			
 			if (ball.offsetTop > 500) {
-				//удаление шарика
+				
 				ball.remove();
-				//создание нового шарика
+				//create a new ball
 				sozdanieBall();
-				//отнятие жизни
+			
 				colichestvoLifes = colichestvoLifes - 1;
-				///заканчивать игру, если не осталось жизней
+			
 				if (colichestvoLifes == 0){
 					stopIgra();
 				}
-				//обновление кол-ва жизней
+				
 				udalenieLifesBlock();
 				sozdanieLifesBlock();
-				//удаляем таймер
+			
 				clearInterval(timerBall);
 			}
-			//Y ms
+			
 		}, 10)
-		//время, через которое шарик будет опускаться
+		
 	},1000)
 
-		//проверка. Если игра окончена, шарик не создается
+	
 		if(status != "koniec"){
 		igraPole.appendChild(ball)
 		}
 	}
 
-//рандомное место для шарика
+//random ball spot
 function random(max){
-	//cлучайное число от 0 до максимума
+	//random number from 0 to max
 	var sluchaynoeChislo = 1 + Math.random() * (max + 1);
-	//округление числа
 	sluchaynoeChislo = Math.floor(sluchaynoeChislo);
-	//возвращение значения
 	return sluchaynoeChislo;
 }
 
 
 /*==================================================
-создание элементов игры
+game element creation
 ==================================================*/
 /*<div id="start-block">
 	<button id="start-knopka">Start</button>
 </div>*/
 function sozdanieStartBlock(){
-	// cоздание <div id="start-block">
+	// create <div id="start-block">
 	startBlock = document.createElement("div");
 	startBlock.id = "start-block"
 
-	//созданиие кнопки <button id="start-knopka">Start</button>
+	//create a button <button id="start-knopka">Start</button>
 	startKnopka = document.createElement("button");
 	startKnopka.id = "start-knopka";
 	startKnopka.innerText = "Start";
 
-	//добавляем кнопку в div
 	startBlock.appendChild(startKnopka);
 
-	//добавляем блок старта на игровое поле
 	igraPole.appendChild(startBlock);
 
 
 }
 
 
-//создание очков и добавление элемента
+//creating points and adding an item
 function sozdanieStarsBlock(){
-	 //блок div
+	 
 	 stars = document.createElement("div");
 	 stars.id = "stars";
-	 //внутренний текст
+	
 	stars.innerText = 0;
-	 //добавляем в игровое поле igra
+	
 	 igraPole.appendChild(stars);
 }
-
 
 
 /*<div id="lifes">
 </div>*/
 //создание жизней
 function sozdanieLifesBlock(){
-	//создание элемента
+	//create element
 	lifes = document.createElement("div");
 	lifes.id = "lifes";
-	//кол-во шариков на данный момент
+	//current number of balls
 	var tekuscheeColichestvoLifes = 0;
 
 	while(tekuscheeColichestvoLifes < colichestvoLifes){
@@ -203,181 +193,166 @@ function sozdanieLifesBlock(){
 }
 
 
-//функция для блока таймера
+//function for timer
 function sozdanieTimerBlock (){
-	//заголовок с текстом внутри
+	
 	var h2 = document.createElement("h2");
 	h2.innerText = "Time: ";
 
-	//в timerBlock добавляем span
-	timerBlock = document.createElement("span");
-	//span id
-	timerBlock.id = "timer";
-	//значение таймера
-	timerBlock.innerText = "120";
 
-	//добавляем span в h2
+	timerBlock = document.createElement("span");
+	timerBlock.id = "timer";
+	timerBlock.innerText = "120";
 	h2.appendChild(timerBlock);
-	//добавляем заголовок в infoBlock
+
 	infoBlock.appendChild(h2);
 }
 
-//создаем блок конца игры
+//create end-of-the-game block
 function sozdanieKoniecIgra(){
-	//создаем блок <div id="koniec-igra"></div>
+	//create <div id="koniec-igra"></div>
 	var div = document.createElement("div");
-	//id блока
 	div.id = "koniec-igra";
 
-	//создаем h2
 	var h2 = document.createElement("h2");
-	h2.innerText = "Игра окончена!"
+	h2.innerText = "Game over"
 
-	//создем h3
 	var h3 = document.createElement("h3");
-	h3.innerText = "Вы собрали " + ochki+ " монет";
+	h3.innerText = "You've achieved " + ochki+ " coins";
 
-	//кнопка для перезапуска игры
+	//restart game btn
 	var startAgain = document.createElement("button");
 	startAgain.id = "start-again";
-	startAgain.innerText = "Играть снова!";
-	//функция для перезапуска страницы при нажатии на кнопку
+	startAgain.innerText = "Play again!";
+
 	startAgain.onclick = function(){
 		location.reload();
 	}
 
-	//добавление в блок h2
+
 	div.appendChild(h2);
-	//добавление в блок h3
+
 	div.appendChild(h3);
-	//добавление в блок кнопки старта
+
 	div.appendChild(startAgain);
-	//добавление на игровое  поле блока конца игры
+	//adding an end-of-game block to the game field
 	igraPole.appendChild(div);
 }
 
-//создание рубина
+//create ruby
 function sozdanieJewel(){
-	 //блок div
+	
 	var jewel = document.createElement("div");
-	 //добавляем в игровое поле igra
-	 //id рубина
+
 	 jewel.className = "jewel";
 
-	//ф-ция для проведения мышкой по рубину
+	//function for dragging the mouse over the ruby
 	 jewel.onmousemove = function(){
 	 	if(jewel.className != "jewel ojidaet-udaleniya"){
-			//добавление жизней
+			//adding lives
 			colichestvoLifes = colichestvoLifes + 1;
-			//добавление времени
+			//adding time
 			soundClick2();
 			udalenieLifesBlock();
 			sozdanieLifesBlock();
 
 
-			//прозрачность рубина
+			//ruby transparency
 			jewel.style.opacity = "0";
 
-			//создание нового шарика
+			//create new ball
 			setTimeout(function(){
-				//удаление предыдущего
+				//delete previous ball
 				jewel.remove();
-				//выбирается ранее созданный рубин. Если его нет, то эта переменная пустая
+				//the previously created ruby is selected. If it does not exist, this variable is empty
 				var suschestvuetJewel = document.querySelector(".jewel");
 				if(suschestvuetJewel == null){
-					//сколько шариков должно быть
+				
 					var kolichestvoBall = 1;
-					//сколько есть на текущий момент
+					
 					var tekuscheeColichestvoBall = 0;
 					while(tekuscheeColichestvoBall < kolichestvoBall) {
-					//шарик на поле
+					
 					sozdanieBall();
 					tekuscheeColichestvoBall = tekuscheeColichestvoBall + 1;
 					}
 
 				}
 			},200)
-		}//конец onclick
+		}
 
-		//ф-ция делает невозможным набрать очки на 1 шарике несколько раз
+		//the function makes it impossible to score points on 1 ball more than once
 		jewel.className = "jewel ojidaet-udaleniya" ;
 
 	}
 
-	//задание координатов рубину
+	//ruby coordinate setting
 		jewel.style.top = "-80px";
 		jewel.style.left = random(750) + "px";//
 
-	//падение рубина
+	//rubby fall
 	setTimeout(function(){
-		//ускорение изменения элемента
+		//element change acceleration
 		jewel.style.transition = "all 0s"
-		//через время рубин опускается со скоростью Х px/Y ms
+		//after a time the ruby descends at a rate of X px/Y ms
 		var timerJewel = setInterval(function(){
 			//X px
 			jewel.style.top = jewel.offsetTop + 1 + "px";
-			//удаление рубина при его выходе за границы
+		
 			if (jewel.offsetTop > 700) {
 				soundClick1();
-				//удаление шарика
 				jewel.remove();
-				//создание нового рубина
 				sozdanieJewel();
-				//отнятие жизни
 				colichestvoLifes = 0;
-				///заканчивать игру, если не осталось жизней
+				
 				if (colichestvoLifes == 0){
 					stopIgra();
 				}
-				//обновление кол-ва жизней
+				//number of lives update
 				udalenieLifesBlock();
 				sozdanieLifesBlock();
-				//удаляем таймер
+				//delete timer
 				clearInterval(timerJewel);
 			}
 			//Y ms
 		}, 10)
-		//время, через которое рубин будет опускаться
+		
 	},100)
 
-		//проверка. Если игра окончена, рубин не создается
+		//Validation. If the game is over, no ruby is created
 		if(status != "koniec"){
 		igraPole.appendChild(jewel)
 		}
 	}
 
 /*===================================================
-Удаление элементов
+deleting elements
 =====================================================*/
-//удалять стартовый блок
+//delete start block
 function udalenieStartBlock(){
-	//удаляем блок старта
 	startBlock.remove();
 }
 
 
-//удалять жизни
+//delete lives block
 function udalenieLifesBlock(){
-	//удаление блока жизней
 	lifes.remove();
 }
 
 
-//удалять очки
+//delete stars block
 function udalenieStarsBlock(){
-	//удаление блока жизней
 	stars.remove();
 }
 
 
-//удалять таймер
+//delete timer block
 function udalenieTimerBlock(){
-	//удаление блока таймера
 	infoBlock.remove();
 }
 
 
-//очистить поле игры
+//delete game field
 function ochistitIgraPole(){
 	igraPole.innerText = "";
 }

@@ -1,40 +1,32 @@
-//переменные
 
-//шарик
 var ball = null;
 
-//кол-во жизней
+//lives amount
 var colichestvoLifes = 4;
 
-//очки
 var stars = null;
 
-//жизни
 var lifes = null;
 
-//блок старта
 var startBlock = null;
 
-//кнопка старта
+//start button
 var startKnopka = null
 
-//таймер
 var timerBlock = null;
 
-//статуc
 var status = "open";
 
-//счет игры
+//points of the game
 var ochki = 0;
 
-//поле игры
+//game field
 var igraPole = document.querySelector("#igra");
 
-//таймер
+//timer
 var chasy;
 
-//блок с таймером
+//block with a timer
 var infoBlock = document.querySelector("#info-block");
 
-//блок жизней
 var lifeBlock = document.querySelector("#lifes");

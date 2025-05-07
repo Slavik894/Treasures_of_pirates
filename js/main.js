@@ -1,34 +1,30 @@
-//главный файл
-
-//функция при загрузке страницы
+//function at the loading page
 function start(){
 
-	//cоздание блока старта
+	//create start block
 	sozdanieStartBlock();
-	//звук
-//	soundClick();
-	//создание таймера
+	
+	//create timer block
 	sozdanieTimerBlock();
 
-	//нажатие на кнопку старта
 	startKnopka.onclick = nachat;
 
 }
-//функция, которая выполняется при начале
+//function to start the game
 function nachat(){
 	soundClick3();
 	status = "nachat";
-	//удаление стартового блока
+	//delete start block
 	udalenieStartBlock();
-	//создание блока очков
+	//create stars block
 	sozdanieStarsBlock();
-	//создание жизней
+	//create lives block
 	sozdanieLifesBlock();
-	//создание мяча
+	//create a ball
 	sozdanieBall();
-	//создание таймера
+	//create a timer
 	timerIgra();
-	//создание рубина каждые 10 с
+	//create a rub every 10 s
 	setInterval(function(){
 		sozdanieJewel();
 	},10000)
@@ -39,35 +35,35 @@ start();
 
 
 
-//остановка игры
+//stopping the game
 function stopIgra(){
 	status = "koniec";
-	//удаление блока жизней
+	//delete lives block
 	udalenieLifesBlock();
-	//удаление блока очков
+	//delete stars block
 	udalenieStarsBlock();
-	//удаление таймера
+	//delete timer
 	udalenieTimerBlock()
-	//очищение поля
+	//clear game field
 	ochistitIgraPole();
-	//конец игры
+	//the end of the game
 	sozdanieKoniecIgra();
-	//soundClick();
+
 }
 
 
 function timerIgra(){
-	//таймер отсчета конца игры
+	//end-of-game timer
 	var chasy = setInterval(function () {
-		//отнятие 1 от значения таймера ежесекундно
+
 	timerBlock.innerText = timerBlock.innerText - 1;
-		//сли таймер на 0
+	
 		if(timerBlock.innerText == 0){
-			//функция остановки игры
+		
 			stopIgra();
-			//остановка таймера
+			
 			clearInterval(chasy);
-			//таймер снова на 10
+			
 			timerBlock.innerText = 10;
 		}
 	},1000)
